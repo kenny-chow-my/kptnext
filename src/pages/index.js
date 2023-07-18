@@ -1,28 +1,20 @@
 import Meta from '@/components/Meta/index';
 import { LandingLayout } from '@/layouts/index';
 import {
-  CallToAction,
-  Features,
+  Translation,
   Footer,
-  Guides,
   Hero,
-  Pricing,
-  Testimonial,
 } from '@/sections/index';
 
 const Home = () => {
   return (
     <LandingLayout>
       <Meta
-        title="NextJS SaaS Boilerplate"
-        description="A boilerplate for your NextJS SaaS projects."
+        title="KPT - Your personalised translator"
+        description="Translations with a personality"
       />
       <Hero />
-      <Features />
-      <Pricing />
-      <Guides />
-      <Testimonial />
-      <CallToAction />
+      <Translation />
       <Footer />
     </LandingLayout>
   );

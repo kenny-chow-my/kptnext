@@ -35,7 +35,7 @@ const Header = () => {
       <div>
         <h5 className="font-bold text-gray-800 dark:text-gray-200">
           {data && data.user && (
-            <span>{data.user.name || data.user.email}</span>
+            <span>{data.user.name + " | " + data.user.email}</span>
           )}
         </h5>
       </div>
