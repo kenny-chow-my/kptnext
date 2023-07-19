@@ -8,7 +8,7 @@ import {
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 
-import Button from '@/components/Button/index';
+import {Button} from 'antd';
 import Modal from '@/components/Modal/index';
 import api from '@/lib/common/api';
 
@@ -52,11 +52,11 @@ const Actions = () => {
   return (
     <div className="flex flex-col items-stretch justify-center px-5 space-y-3">
       <Button
-        className="text-white bg-blue-600 hover:bg-blue-500"
         onClick={toggleModal}
+        type="primary"
       >
         <PlusIcon className="w-5 h-5 text-white" aria-hidden="true" />
-        <span>Create Workspace</span>
+        Create Workspace
       </Button>
       <Modal show={showModal} title="Create a Workspace" toggle={toggleModal}>
         <div className="space-y-0 text-sm text-gray-600">

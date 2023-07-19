@@ -1,20 +1,33 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 
-import Button from '@/components/Button/index';
-import Card from '@/components/Card/index';
 import Content from '@/components/Content/index';
 import Meta from '@/components/Meta/index';
 import { AccountLayout } from '@/layouts/index';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { Radio, Select, Card, Button, Input, Form } from 'antd';
+
 
 const Welcome = () => {
   const router = useRouter();
   const [isSubmitting, setSubmittingState] = useState(false);
+  const [translationStyle, setTranslationStyle] = useState(1);
+  const [languagePair, setLanguagePair] = useState(1);
 
   const session = useSession();
 
+  const formRef = useRef(null);
+
+  const onChangeTranslationStyle = (e) => {
+    console.log('radio checked', e.target.value);
+    setTranslationStyle(e.target.value);
+  };
+
+  const onChangeLanguagePair = (e) => {
+    console.log('radio checked', e.target.value);
+    setLanguagePair(e.target.value);
+  };
 
   const changeName = (evt) => {
     evt.preventDefault();
@@ -22,38 +35,83 @@ const Welcome = () => {
     console.log(session);
   }
 
+
+  const languages = [
+        { value: 'zh', label: 'Chinese' },
+        { value: 'en', label: 'English' },
+        { value: 'es', label: 'Spanish' },
+        { value: 'id', label: 'Bahasa Indonesia' },
+      ];
+
   return (
     <AccountLayout>
       <Meta title="Translate" />
       <Content.Title
         title="Translator"
-        subtitle="Start building SaaS platforms in a day"
+        subtitle="Create your own personal translator"
       />
       <Content.Divider />
       <Content.Container>
-         <Card>
-          <form>
-            <Card.Body
-              title="Test to translate"
-              subtitle="Please enter the text to translate"
-            >
-              <input
-                className="px-3 py-2 border rounded md:w-1/2"
-                disabled={isSubmitting}
-                type="text"
-              />
-            </Card.Body>
-            <Card.Footer>
-              <small>Please use 32 characters at maximum</small>
+         <Card title="Translate your text">
+            <Form ref={formRef}>
+
+      <Form.Item
+        name="sourceText"
+        label="Translate this"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input.TextArea />
+      </Form.Item>
+
+        <Form.Item
+        name="translationStyle"
+        label="Style"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >      
+            <Radio.Group onChange={onChangeTranslationStyle} value={translationStyle}>
+              <Radio value={"1"}>Neutral</Radio>
+              <Radio value={"2"}>Casual</Radio>
+              <Radio value={"3"}>Business Formal</Radio>
+            </Radio.Group>
+       </Form.Item>     
+
+
+        <Form.Item
+            name="languagePair"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
+ 
+            From:
+            <Select defaultValue="en" 
+              options = {languages}
+            />
+
+
+            To:
+            <Select defaultValue="id" 
+              options = {languages}
+            />
+           </Form.Item>     
               <Button
-                className="text-white bg-blue-600 hover:bg-blue-500"
                 disabled={isSubmitting}
                 onClick={changeName}
+                type="primary"
               >
                 Translate
               </Button>
-            </Card.Footer>
-          </form>
+            </Form>
         </Card>
        </Content.Container>
     </AccountLayout>

@@ -1,9 +1,6 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
+
 //import EmailProvider from 'next-auth/providers/email';
 import GoogleProvider from 'next-auth/providers/google';
-
-import prisma from '@/prisma/index';
-import { createPaymentAccount, getPayment } from '@/prisma/services/customer';
 
 export const authOptions = {
   //adapter: PrismaAdapter(prisma),
@@ -19,22 +16,23 @@ export const authOptions = {
       if(session && session.user){
         session.user.id = token.email;
         session.user.accessToken = token.accessToken;
+        session.user.idToken = token.idToken;
       }
       
       // session.accessToken = token.account.accessToken
-      return session
+      return session;
+    },
+    async jwt({ token, account, profile }) {
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        token.idToken = account.id_token;
+        token.accessToken = account.access_token;
+      }
+      return token;
     },
   },
   debug: !(process.env.NODE_ENV === 'production'),
-  // events: {
-  //   signIn: async ({ user, isNewUser }) => {
-  //     // const customerPayment = await getPayment(user.email);
 
-  //     // if (isNewUser || customerPayment === null || user.createdAt === null) {
-  //     //   await Promise.all([createPaymentAccount(user.email, user.id)]);
-  //     // }
-  //   },
-  // },
   providers: [
     // EmailProvider({
     //   from: process.env.EMAIL_FROM,

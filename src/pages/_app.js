@@ -8,7 +8,7 @@ import { SWRConfig } from 'swr';
 
 import progressBarConfig from '@/config/progress-bar/index';
 import swrConfig from '@/config/swr/index';
-import WorkspaceProvider from '@/providers/workspace';
+import AntdProvider from '@/providers/antd';
 
 import '@/styles/globals.css';
 
@@ -43,10 +43,10 @@ const App = ({ Component, pageProps }) => {
     <SessionProvider session={pageProps.session}>
       <SWRConfig value={swrOptions}>
         <ThemeProvider attribute="class">
-          <WorkspaceProvider>
+          <AntdProvider>
             {progress && <TopBarProgress />}
             <Component {...pageProps} />
-          </WorkspaceProvider>
+          </AntdProvider>
         </ThemeProvider>
       </SWRConfig>
     </SessionProvider>

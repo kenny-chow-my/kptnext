@@ -13,7 +13,7 @@ const Sidebar = ({ menu }) => {
 
   const renderMenu = () => {
     return (
-      menu.map((item, index) => (
+      menu && menu.map((item, index) => (
         <Menu
           key={index}
           data={item}
