@@ -13,7 +13,7 @@ const AuthLayout = ({ children }) => {
     setTheme('light');
 
     if (status === 'authenticated') {
-      router.push('/account');
+      router.push('/translate');
     }
   }, [setTheme, status, router]);
 

@@ -38,7 +38,7 @@ const Hero = () => {
             </nav>
             <Link
               href={
-                sessionStatus === 'authenticated' ? '/account' : '/auth/login'
+                sessionStatus === 'authenticated' ? '/translate' : '/auth/login'
               }
               className="w-full px-5 py-2 text-center text-white bg-blue-600 rounded shadow hover:bg-blue-500"
             >

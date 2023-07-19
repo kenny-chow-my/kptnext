@@ -8,12 +8,16 @@ import { AccountLayout } from '@/layouts/index';
 import { useSession } from 'next-auth/react';
 import { Radio, Select, Card, Button, Input, Form } from 'antd';
 
+import api from '@/lib/common/api';
 
 const Welcome = () => {
   const router = useRouter();
   const [isSubmitting, setSubmittingState] = useState(false);
   const [translationStyle, setTranslationStyle] = useState(1);
   const [languagePair, setLanguagePair] = useState(1);
+  const [sourceText, setSourceText] = useState("");
+
+  const [translatedText, setTranslatedText] = useState("");
 
   const session = useSession();
 
@@ -29,10 +33,43 @@ const Welcome = () => {
     setLanguagePair(e.target.value);
   };
 
-  const changeName = (evt) => {
+
+  const handleSourceTextChange = (event) => setSourceText(event.target.value);
+
+  const doTranslate = (evt) => {
     evt.preventDefault();
     console.log(evt);
     console.log(session);
+
+    const request = {
+      languagePairId: "6d65c38b-5a1a-425e-b732-ac39d1bf2a2d",
+      sourceText: sourceText
+    };
+
+    
+    setSubmittingState(true);
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/translate/';
+
+    api(url, {
+      body: request,
+      method: 'POST',
+    }).then((response) => {
+      setSubmittingState(false);
+
+      if (response.errors) {
+        Object.keys(response.errors).forEach((error) =>
+          toast.error(response.errors[error].msg)
+        );
+      } else {
+        toast.success('Translation done!');
+        console.log(response);
+        setTranslatedText(response.translatedText);
+      }
+    }).catch((err) =>{
+        setSubmittingState(false);
+        toast.error('There was an error!');
+        console.log(err);
+    });
   }
 
 
@@ -64,7 +101,10 @@ const Welcome = () => {
           },
         ]}
       >
-        <Input.TextArea />
+        <Input.TextArea value={sourceText}
+                        disabled={isSubmitting}
+                        onChange={handleSourceTextChange}
+        />
       </Form.Item>
 
         <Form.Item
@@ -106,12 +146,20 @@ const Welcome = () => {
            </Form.Item>     
               <Button
                 disabled={isSubmitting}
-                onClick={changeName}
+                onClick={doTranslate}
                 type="primary"
               >
                 Translate
               </Button>
             </Form>
+          </Card>
+          <Card title="Result">
+          <Form.Item>
+              <Input.TextArea value={translatedText}
+                            disabled={isSubmitting}
+            />
+          </Form.Item>
+
         </Card>
        </Content.Container>
     </AccountLayout>
