@@ -51,7 +51,7 @@ const Actions = () => {
 
   return (
     <div className="flex flex-col items-stretch justify-center px-5 space-y-3">
-      <Button
+      {/* <Button
         onClick={toggleModal}
         type="primary"
       >
@@ -87,7 +87,7 @@ const Actions = () => {
             <span>Create Workspace</span>
           </Button>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

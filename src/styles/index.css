@@ -351,3 +351,7 @@ video {
 [hidden] {
   display: none;
 }
+
+.topmost {
+  z-index: 999;
+}

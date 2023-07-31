@@ -49,9 +49,12 @@ const Welcome = () => {
     
     setSubmittingState(true);
     const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/translate/';
-
+    
     api(url, {
       body: request,
+      headers: {
+        Authorization: "Bearer " +  session.data.user.idToken
+      },
       method: 'POST',
     }).then((response) => {
       setSubmittingState(false);
@@ -84,10 +87,11 @@ const Welcome = () => {
     <AccountLayout>
       <Meta title="Translate" />
       <Content.Title
-        title="Translator"
-        subtitle="Create your own personal translator"
+        title="Lingui.me"
+        subtitle="Your translator with a personality"
       />
       <Content.Divider />
+      
       <Content.Container>
          <Card title="Translate your text">
             <Form ref={formRef}>
