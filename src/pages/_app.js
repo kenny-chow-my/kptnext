@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Router, { useRouter } from 'next/router';
-import { SessionProvider } from 'next-auth/react';
+import { useSession, SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 import ReactGA from 'react-ga';
 import TopBarProgress from 'react-topbar-progress-indicator';
@@ -39,13 +39,30 @@ const App = ({ Component, pageProps }) => {
     };
   }, [router.events]);
 
+  function Auth({ children }) {
+    // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"
+    const { status } = useSession({ required: true });
+
+    if (status === 'loading') {
+      return <div>Loading...</div>;
+    }
+
+    return children;
+  }
+
   return (
     <SessionProvider session={pageProps.session}>
       <SWRConfig value={swrOptions}>
         <ThemeProvider attribute="class">
           <AntdProvider>
             {progress && <TopBarProgress />}
-            <Component {...pageProps} />
+            {Component.auth ? (
+              <Auth>
+                <Component {...pageProps} />
+              </Auth>
+            ) : (
+              <Component {...pageProps} />
+            )}
           </AntdProvider>
         </ThemeProvider>
       </SWRConfig>
