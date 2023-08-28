@@ -4,10 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import Meta from '@/components/Meta';
-import {
-  getSiteWorkspace,
-  getWorkspacePaths,
-} from '@/prisma/services/workspace';
 
 const Site = ({ workspace }) => {
   const router = useRouter();
@@ -57,16 +53,16 @@ const Site = ({ workspace }) => {
 };
 
 export const getStaticPaths = async () => {
-  const paths = await getWorkspacePaths();
+  //const paths = await getWorkspacePaths();
   return {
-    paths,
+    paths: [],
     fallback: true,
   };
 };
 
 export const getStaticProps = async ({ params }) => {
   const { site } = params;
-  const siteWorkspace = await getSiteWorkspace(site, site.includes('.'));
+  const siteWorkspace = null; // await getSiteWorkspace(site, site.includes('.'));
   let workspace = null;
 
   if (siteWorkspace) {

@@ -1,16 +1,12 @@
 import Meta from '@/components/Meta/index';
 import { LandingLayout } from '@/layouts/index';
-import {
-  Translation,
-  Footer,
-  Hero,
-} from '@/sections/index';
+import { Translation, Footer, Hero } from '@/sections/index';
 
 const Home = () => {
   return (
     <LandingLayout>
       <Meta
-        title="KPT - Your personalised translator"
+        title="Lingui.me - Your personalised translator"
         description="Translations with a personality"
       />
       <Hero />

@@ -23,7 +23,7 @@ const Translate = () => {
 
   const session = useSession({ required: true });
 
-  const idTooken = session.data?.user?.idToken || '';
+  const idToken = session.data?.user?.idToken || '';
 
   const formRef = useRef(null);
 
@@ -42,7 +42,7 @@ const Translate = () => {
 
     api(url, {
       headers: {
-        Authorization: 'Bearer ' + idTooken,
+        Authorization: 'Bearer ' + idToken,
       },
       method: 'GET',
     })
@@ -79,7 +79,7 @@ const Translate = () => {
     api(url, {
       body: request,
       headers: {
-        Authorization: 'Bearer ' + idTooken,
+        Authorization: 'Bearer ' + idToken,
       },
       method: 'POST',
     })
