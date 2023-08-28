@@ -2,7 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/prisma/*": ["prisma/*"],
       "@/components/*": ["src/components/*"],
       "@/config/*": ["src/config/*"],
       "@/hooks/*": ["src/hooks/*"],

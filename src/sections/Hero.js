@@ -60,7 +60,7 @@ const Hero = () => {
             Get Started
           </a>
           <a className="px-10 py-3 text-center text-blue-600 rounded shadow hover:bg-blue-50">
-            Live Demo
+            Version 1.0.0
           </a>
         </div>
       </div>

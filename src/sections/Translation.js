@@ -33,10 +33,7 @@ const Translation = () => {
           <div className="flex flex-col items-center justify-start px-5 space-y-3 md:w-1/3">
             <div className="flex items-center justify-center w-16 h-16 bg-gray-600 rounded-full" />
             <h3 className="text-lg font-bold">Launch Time</h3>
-            <p className="text-center text-gray-400">
-              Some quick example text to build on the card title and make up the
-              bulk of the card&apos;s content.
-            </p>
+            <p className="text-center text-gray-400">version 1.0.0</p>
           </div>
         </div>
       </div>

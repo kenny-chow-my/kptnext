@@ -3,4 +3,5 @@ module.exports = {
     domains: [''],
   },
   reactStrictMode: true,
+  output: 'standalone',
 };
