@@ -19,6 +19,14 @@ const Translate = () => {
   const [personas, setPersonas] = useState([
     { name: 'default', prompt: 'default' },
   ]);
+  const [languages, setLanguages] = useState([
+    {
+      value: '6d65c38b-5a1a-425e-b732-ac39d1bf2a2d',
+      sourceLanguage: 'en',
+      targetLanguage: 'zh',
+      label: 'English to Chinese',
+    },
+  ]);
   const [translatedText, setTranslatedText] = useState('');
 
   const session = useSession({ required: true });
@@ -33,14 +41,15 @@ const Translate = () => {
   };
 
   const onChangeLanguagePair = (e) => {
-    console.log('radio checked', e.target.value);
-    setLanguagePair(e.target.value);
+    console.log('changed languaged', e);
+    setLanguagePair(e);
   };
 
   useEffect(() => {
-    const url = process.env.NEXT_PUBLIC_BACKEND_URL + '/config/personas';
+    const personasUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL + '/config/personas';
 
-    api(url, {
+    api(personasUrl, {
       headers: {
         Authorization: 'Bearer ' + idToken,
       },
@@ -58,6 +67,33 @@ const Translate = () => {
         toast.error('There was an error!');
         console.log(err);
       });
+
+    const languagesUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL + '/config/languages';
+
+    api(languagesUrl, {
+      headers: {
+        Authorization: 'Bearer ' + idToken,
+      },
+      method: 'GET',
+    })
+      .then((response) => {
+        if (response.error) {
+          toast.error(response.error);
+        } else {
+          console.log(response);
+          const languages = response.data.map(({ id, ...rest }) => ({
+            value: id,
+            ...rest,
+          }));
+          setLanguages(languages);
+          console.log(languages);
+        }
+      })
+      .catch((err) => {
+        toast.error('There was an error!');
+        console.log(err);
+      });
   }, []);
 
   const handleSourceTextChange = (event) => setSourceText(event.target.value);
@@ -68,7 +104,7 @@ const Translate = () => {
     console.log(session);
 
     const request = {
-      languagePairId: '6d65c38b-5a1a-425e-b732-ac39d1bf2a2d',
+      languagePairId: languagePair.value || 0,
       sourceText: sourceText,
       persona: translationStyle,
     };
@@ -100,13 +136,6 @@ const Translate = () => {
         console.log(err);
       });
   };
-
-  const languages = [
-    { value: 'zh', label: 'Chinese' },
-    { value: 'en', label: 'English' },
-    { value: 'es', label: 'Spanish' },
-    { value: 'id', label: 'Bahasa Indonesia' },
-  ];
 
   return (
     <AccountLayout>
@@ -165,10 +194,12 @@ const Translate = () => {
                 },
               ]}
             >
-              From:
-              <Select defaultValue="en" options={languages} />
-              To:
-              <Select defaultValue="id" options={languages} />
+              Language:
+              <Select
+                defaultValue="6d65c38b-5a1a-425e-b732-ac39d1bf2a2d"
+                options={languages}
+                onChange={onChangeLanguagePair}
+              />
             </Form.Item>
             <Button
               disabled={isSubmitting}
