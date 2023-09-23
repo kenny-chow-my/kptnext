@@ -13,8 +13,10 @@ import api from '@/lib/common/api';
 const Translate = () => {
   const router = useRouter();
   const [isSubmitting, setSubmittingState] = useState(false);
-  const [translationStyle, setTranslationStyle] = useState('');
-  const [languagePair, setLanguagePair] = useState(1);
+  const [translationStyle, setTranslationStyle] = useState('casual');
+  const [languagePair, setLanguagePair] = useState(
+    '6d65c38b-5a1a-425e-b732-ac39d1bf2a2d'
+  );
   const [sourceText, setSourceText] = useState('');
   const [personas, setPersonas] = useState([
     { name: 'default', prompt: 'default' },
@@ -50,9 +52,6 @@ const Translate = () => {
       process.env.NEXT_PUBLIC_BACKEND_URL + '/config/personas';
 
     api(personasUrl, {
-      headers: {
-        Authorization: 'Bearer ' + idToken,
-      },
       method: 'GET',
     })
       .then((response) => {
@@ -72,9 +71,6 @@ const Translate = () => {
       process.env.NEXT_PUBLIC_BACKEND_URL + '/config/languages';
 
     api(languagesUrl, {
-      headers: {
-        Authorization: 'Bearer ' + idToken,
-      },
       method: 'GET',
     })
       .then((response) => {
@@ -104,7 +100,7 @@ const Translate = () => {
     console.log(session);
 
     const request = {
-      languagePairId: languagePair.value || 0,
+      languagePairId: languagePair || 0,
       sourceText: sourceText,
       persona: translationStyle,
     };
@@ -141,13 +137,13 @@ const Translate = () => {
     <AccountLayout>
       <Meta title="Translate" />
       <Content.Title
-        title="Lingui.me"
-        subtitle="Your translator with a personality"
+        title="What would you like to translate today?"
+        subtitle=""
       />
       <Content.Divider />
 
       <Content.Container>
-        <Card title="Translate your text">
+        <Card>
           <Form ref={formRef}>
             <Form.Item
               name="sourceText"
@@ -187,7 +183,7 @@ const Translate = () => {
             </Form.Item>
 
             <Form.Item
-              name="languagePair"
+              name="languagePairSelect"
               rules={[
                 {
                   required: true,

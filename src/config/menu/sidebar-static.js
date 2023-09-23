@@ -2,13 +2,13 @@ const sidebarMenu = () => [
   {
     name: 'Translations',
     menuItems: [
-       {
+      {
         name: 'New Translation',
-        path: `/translate`,
+        path: `/`,
       },
       {
         name: 'History',
-        path: `/history`,
+        path: `/comingsoon`,
       },
     ],
   },
@@ -17,11 +17,20 @@ const sidebarMenu = () => [
     menuItems: [
       {
         name: 'Clear History',
-        path: `/deletehistory`,
+        path: `/comingsoon`,
       },
       {
         name: 'Settings',
-        path: `/account/settings`,
+        path: `/comingsoon`,
+      },
+    ],
+  },
+  {
+    name: 'Help',
+    menuItems: [
+      {
+        name: 'Support',
+        path: `/support`,
       },
     ],
   },

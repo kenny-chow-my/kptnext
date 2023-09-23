@@ -34,9 +34,7 @@ const Header = () => {
     <div className="flex flex-row items-center justify-between">
       <div>
         <h5 className="font-bold text-gray-800 dark:text-gray-200">
-          {data && data.user && (
-            <span>Hello, {data.user.name}</span>
-          )}
+          {data && data.user && <span>Hello, {data.user.name}</span>}
         </h5>
       </div>
       <Menu as="div" className="relative inline-block text-left">
@@ -59,7 +57,7 @@ const Header = () => {
             <div className="p-2">
               <Menu.Item>
                 <Link
-                  href="/account/settings"
+                  href="/account"
                   className="flex items-center w-full px-2 py-2 space-x-2 text-sm text-gray-800 rounded hover:bg-blue-600 hover:text-white group"
                 >
                   <UserCircleIcon aria-hidden="true" className="w-5 h-5" />
