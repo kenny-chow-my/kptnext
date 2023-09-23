@@ -7,6 +7,7 @@ import Content from '@/components/Content/index';
 import Header from '@/components/Header/index';
 import Sidebar from '@/components/Sidebar/index';
 import menu from '@/config/menu/index';
+import { Footer } from '@/sections/index';
 
 const AccountLayout = ({ children }) => {
   const { status } = useSession();
@@ -26,6 +27,8 @@ const AccountLayout = ({ children }) => {
         <Toaster position="bottom-left" toastOptions={{ duration: 10000 }} />
         <Header />
         {children}
+
+        <Footer />
       </Content>
     </main>
   );
